@@ -1,17 +1,17 @@
-import Toy from "../models/Toy.js";
+import Product from "../models/Product.js";
 
-class ToyService {
-    static getAllToys = async () => {
-        return await Toy.find();
+class ProductService {
+    static getAllProducts = async () => {
+        return await Product.find();
     }
 
-    static async getToyById(toyId) {
-        const toy = Toy.findById(toyId);
-        if(!toy) {
-            throw new Error("Toy not found");
+    static async getProductById(productId) {
+        const product = Product.findById(productId);
+        if(!product) {
+            throw new Error("Product not found");
         }
 
-        return toy;
+        return product;
     }
 
     static search = async (queryParams) => {
@@ -35,8 +35,8 @@ class ToyService {
             if (queryParams.maxPrice) query.price.$lte = Number(queryParams.maxPrice);
         }
 
-        return await Toy.find(query);
+        return await Product.find(query);
     }
 }
 
-export default ToyService;
+export default ProductService;

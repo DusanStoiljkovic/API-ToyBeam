@@ -1,12 +1,17 @@
-import Cart from "../models/Cart";
-import Toy from "../models/Toy";
+import Cart from "../models/Cart.js";
+import Toy from "../models/Product.js";
 
 export class CartService {
-    
-    static addToCart = async (userId, toyId) => {
-        const toy = await Toy.findById(toyId);
-        if(!toy) {
-            throw new Error("Toy not found");
+
+    static getCartByUserId = async (userId) => {
+        const cart = await Cart.findOne({ user: userId }).populate('items.productId');
+        return cart;
+    }
+
+    static addToCart = async (userId, productId) => {
+        const product = await Toy.findById(productId);
+        if(!product) {
+            throw new Error("Product not found");
         }
 
         let cart = await Cart.findOne({
@@ -21,12 +26,14 @@ export class CartService {
             });
         }
 
-        cart.items.push({ toy: toyId })
-        cart.totalPrice += toy.price;
+        cart.items.push({ product: productId })
+        cart.totalPrice += product.price;
 
         await cart.save();
         return cart;
     }
 }
+
+export default CartService;
 
 

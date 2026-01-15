@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Category from "../models/Category.js";
-import Toy from "../models/Toy.js";
+import Product from "../models/Product.js";
 
 dotenv.config();
 
@@ -54,8 +54,8 @@ const categories = [
   }
 ];
 
-/* ===================== TOYS ===================== */
-const toys = [
+/* ===================== PRODUCTS ===================== */
+const products = [
   {
     name: "Junior Monopoly Board Game",
     categoryName: "board_game",
@@ -351,8 +351,8 @@ const seedDatabase = async () => {
 
     console.log("🧹 Cleaning database...");
     await Category.deleteMany();
-    await Toy.deleteMany();
-
+    await Product.deleteMany();
+    
     console.log("📦 Inserting categories...");
     const createdCategories = await Category.insertMany(categories);
 
@@ -362,16 +362,16 @@ const seedDatabase = async () => {
       categoryMap[cat.name] = cat._id;
     });
 
-    console.log("🧸 Inserting toys...");
-    const toysWithCategoryIds = toys.map(toy => ({
-      ...toy,
-      category: categoryMap[toy.categoryName]
+    console.log("🧸 Inserting products...");
+    const productsWithCategoryIds = products.map(product => ({
+      ...product,
+      category: categoryMap[product.categoryName]
     }));
 
     // uklanjamo pomoćno polje
-    toysWithCategoryIds.forEach(t => delete t.categoryName);
+    productsWithCategoryIds.forEach(p => delete p.categoryName);
 
-    await Toy.insertMany(toysWithCategoryIds);
+    await Product.insertMany(productsWithCategoryIds);
 
     console.log("✅ Database seeded successfully");
     process.exit();

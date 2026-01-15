@@ -1,16 +1,12 @@
 import Cart from '../models/Cart.js';
-import Toy from '../models/Toy.js';
+import Toy from '../models/Product.js';
+import cartService from '../services/cart.service.js';
 
 
 export const getCart = async (req, res) => {
-    const cart = await Cart.findOne(
-        { user: req.user.id })
-        .populate('toys');
-    
-    if(!cart) 
-        return res.json({ toys: [] })
-
-    res.json(cart);
+    cartService.getCartByUserId(req.user.id)
+        .then(cart => res.json(cart))
+        .catch(err => res.status(500).json({ message: err.message }));
 };
 
 
