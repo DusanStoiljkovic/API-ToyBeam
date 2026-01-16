@@ -2,6 +2,7 @@ import Cart from "../models/Cart";
 import Toy from "../models/Toy";
 
 export class CartService {
+    
     static addToCart = async (userId, toyId) => {
         const toy = await Toy.findById(toyId);
         if(!toy) {
