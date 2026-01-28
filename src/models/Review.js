@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 
 const reviewSchema = new mongoose.Schema({
-    toyId: {
+    productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Toy",
+        ref: "Product",
         required: true
     },
 
@@ -32,6 +32,6 @@ const reviewSchema = new mongoose.Schema({
 
 // Ensure a user can leave only one review per toy
 
-reviewSchema.index({ toyId: 1, userId: 1 }, { unique: true });
+reviewSchema.index({ productId: 1, userId: 1 }, { unique: true });
 
 export default mongoose.model('Review', reviewSchema);
