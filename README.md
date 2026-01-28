@@ -3,8 +3,10 @@
 Node.js • Express • MongoDB • JWT
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Production-ready REST API for an e-commerce application built with Node.js, Express, and MongoDB (Mongoose).
 The project follows a clean service–controller architecture and demonstrates real-world backend patterns used in professional environments.
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 🎯 Built as a portfolio project to showcase backend development skills for junior/mid backend roles.
