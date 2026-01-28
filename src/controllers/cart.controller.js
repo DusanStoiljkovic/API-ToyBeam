@@ -4,34 +4,41 @@ import cartService from '../services/cart.service.js';
 
 
 export const getCart = async (req, res) => {
-    cartService.getCartByUserId(req.user.id)
-        .then(cart => res.json(cart))
-        .catch(err => res.status(500).json({ message: err.message }));
+    try {
+        const cart = await cartService.getCartByUserId(req.user.id);
+        res.json(cart);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 };
 
 
 export const addToCart = async (req, res) => {
-    let cart = await Cart.findOne({ user: req.user.id });
-    if (!cart) cart = await Cart.create({ user: req.user.id, toys: [] });
-    cart.toys.push(req.body.toyId);
-    await cart.save();
+  try {
+    const cart = await cartService.addToCart(req.user.id, req.body.productId, req.body.quantity);
     res.json(cart);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const editQuantity = async (req, res) => {
+  try {
+    const { productId, quantity } = req.body;
+    const cart = await cartService.editQuantity(req.user.id, productId, quantity);
+    res.json(cart);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 
 export const removeFromCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({user: req.user.id})
-
-    if(!cart)
-        return res.status(404).json({message: "Cart not found"});
-
+    const cart = await cartService.removeFromCart(req.user.id, req.body.productId, req.body.quantity);
     res.json(cart);
-
-    cart.toys = cart.toys.filter(toy => toy._id !== req.params.id)
-
   } catch (err) {
-    res.status(500).json({message: err.message})
+    res.status(500).json({ message: err.message });
   }
 
 };
