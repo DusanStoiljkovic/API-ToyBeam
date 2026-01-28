@@ -18,3 +18,12 @@ export const search = async (req, res) => {
         .then(products => res.json(products))
         .catch(err => res.status(500).json({ message: err.message }));
 };
+
+export const editProduct = async (req, res) => {
+    try {
+        const product = await productService.editProduct(req.body);
+        res.json(product);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}

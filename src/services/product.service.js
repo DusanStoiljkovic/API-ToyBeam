@@ -37,6 +37,17 @@ class ProductService {
 
         return await Product.find(query);
     }
+
+    static editProduct = async (productData) => {
+        for(const key in productData) {
+            if(productData[key] === undefined) {
+                return
+            }
+        }
+
+        const product = await Product.findByIdAndUpdate(productData._id, productData, { new: true });
+        return product;
+    }
 }
 
 export default ProductService;
