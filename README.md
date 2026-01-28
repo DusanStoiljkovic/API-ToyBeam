@@ -34,6 +34,7 @@ MVC-inspired architecture
 Postman / REST Client testing
 
 🧱 Project Architecture
+```
 src/
 ├── controllers/    # HTTP layer (req / res)
 ├── services/       # Business logic
@@ -42,6 +43,7 @@ src/
 ├── middleware/     # Auth & validation
 ├── config/         # Database & environment config
 └── app.js
+```
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
