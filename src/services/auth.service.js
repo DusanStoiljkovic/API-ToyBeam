@@ -33,4 +33,13 @@ export class AuthService {
 
         return token;    
     }
+
+    static async getUser(userId) {
+        const user = await User.findOne({_id: userId});
+        if(!user) {
+            throw new Error("User not found");
+        }
+
+        return user;
+    }
 }

@@ -2,11 +2,11 @@ import Product from "../models/Product.js";
 
 class ProductService {
     static getAllProducts = async () => {
-        return await Product.find();
+        return await Product.find().populate('category');
     }
 
     static async getProductById(productId) {
-        const product = Product.findById(productId);
+        const product = await Product.findById(productId).populate('category');
         if(!product) {
             throw new Error("Product not found");
         }

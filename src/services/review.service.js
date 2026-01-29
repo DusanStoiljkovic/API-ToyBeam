@@ -18,6 +18,12 @@ class ReviewService {
     }
 
     static async addReview(userId, productId, rating, comment) {
+        const existingReview = await Review.findOne({userId, productId});
+        
+        if(existingReview) {
+            throw new Error("User have already reviewed product.");
+        }
+
         const review = new Review({
             userId: userId,
             productId: productId,
