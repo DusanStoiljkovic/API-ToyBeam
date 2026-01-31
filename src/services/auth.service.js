@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export class AuthService {
     static async register (userData) {
-        const { firstName, lastName, email, password, role, createdAt } = userData;
+        const { firstName, lastName, email, password, role, phone, address, favouriteProductCategories } = userData;
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({
             firstName,
@@ -13,7 +13,9 @@ export class AuthService {
             email,
             password: hashedPassword,
             role,
-            createdAt
+            phone,
+            address,
+            favouriteProductCategories
         });
         return await user.save();
     }
@@ -42,4 +44,51 @@ export class AuthService {
 
         return user;
     }
+
+    static async editProfile(userId, userData) {
+        const allowedFields = [
+            "firstName",
+            "lastName",
+            "email",
+            "phone",
+            "address",
+            "favouriteProductCategories"
+        ];
+
+        const filteredData = Object.fromEntries(
+            Object.entries(userData)
+            .filter(([key, value]) =>
+                allowedFields.includes(key) && value !== undefined
+            )
+        );
+
+        if (Object.keys(filteredData).length === 0) {
+            throw new Error("No valid fields to update");
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            filteredData,
+            {
+            new: true,
+            runValidators: true
+            }
+        );
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        return user;
+    }
+
+    static async changePassword(userId, body) {
+        const hashedPassword = await bcrypt.hash(body.password, 10);
+        console.log("userId: ", userId)
+        console.log("hashed: ", hashedPassword);
+        const user = await User.findByIdAndUpdate(userId, {password: hashedPassword}, { new: true });
+        if(!user) 
+            throw new Error("User not found");
+    }
+
 }

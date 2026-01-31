@@ -33,16 +33,14 @@ export class CartService {
         } else {
             cart.products.push({ productId, quantity });
         }
-
-        console.log("quantity: ", typeof quantity);
-        console.log("product price:", typeof product.price);
-        console.log("total price before addition:", typeof cart.totalPrice);
-
         cart.totalPrice += product.price * quantity;
         cart.totalPrice = Number(cart.totalPrice.toFixed(2));
 
         await cart.save();
-        return cart;
+
+        const populatedCart = await Cart.findOne({userId}).populate("products.productId");
+
+        return populatedCart;
     }
 
     static async editQuantity(userId, productId, quantity) {
@@ -108,7 +106,9 @@ export class CartService {
         }
 
         await cart.save();
-        return cart;
+
+        const populatedCart = Cart.findOne({userId}).populate("products.productId");
+        return populatedCart;
     }
 }
 
