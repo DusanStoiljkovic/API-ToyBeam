@@ -14,8 +14,6 @@ export const getCart = async (req, res) => {
 
 
 export const addToCart = async (req, res) => {
-  console.log("USER: ", req.user)
-  console.log("BODY: ", req.body)
   try {
     const cart = await cartService.addToCart(req.user.id, req.body.productId, req.body.quantity);
     res.json(cart);
@@ -36,8 +34,6 @@ export const editQuantity = async (req, res) => {
 
 
 export const removeFromCart = async (req, res) => {
-  console.log("USER: ", req.user)
-  console.log("BODY: ", req.body)
   try {
     const cart = await cartService.removeFromCart(req.user.id, req.body.productId, req.body.quantity);
     res.json(cart);
