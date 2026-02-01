@@ -20,6 +20,7 @@ export const search = async (req, res) => {
 };
 
 export const editProduct = async (req, res) => {
+    console.log("BODY: ", req.body)
     try {
         const product = await productService.editProduct(req.body);
         res.json(product);

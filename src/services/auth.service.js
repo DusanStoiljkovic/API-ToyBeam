@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export class AuthService {
     static async register (userData) {
-        const { firstName, lastName, email, password, role, phone, address, favouriteProductCategories } = userData;
+        const { firstName, lastName, email, password, role, phone, city, postalCode, address, favouriteProductCategories } = userData;
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({
             firstName,
@@ -14,6 +14,8 @@ export class AuthService {
             password: hashedPassword,
             role,
             phone,
+            city,
+            postalCode,
             address,
             favouriteProductCategories
         });
@@ -51,6 +53,8 @@ export class AuthService {
             "lastName",
             "email",
             "phone",
+            "city",
+            "postalCode",
             "address",
             "favouriteProductCategories"
         ];
@@ -58,7 +62,7 @@ export class AuthService {
         const filteredData = Object.fromEntries(
             Object.entries(userData)
             .filter(([key, value]) =>
-                allowedFields.includes(key) && value !== undefined
+                allowedFields.includes(key)
             )
         );
 

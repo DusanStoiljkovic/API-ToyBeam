@@ -45,7 +45,7 @@ class ProductService {
             }
         }
 
-        const product = await Product.findByIdAndUpdate(productData._id, productData, { new: true });
+        const product = await Product.findByIdAndUpdate(productData._id, productData, { new: true }).populate("category");
         return product;
     }
 }

@@ -14,7 +14,11 @@ export const getCart = async (req, res) => {
 
 
 export const addToCart = async (req, res) => {
+  console.log("USER: ", req.user);
   try {
+    if (!req.user?.id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
     const cart = await cartService.addToCart(req.user.id, req.body.productId, req.body.quantity);
     res.json(cart);
   } catch (err) {
