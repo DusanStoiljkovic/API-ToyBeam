@@ -1,3 +1,5 @@
+<img width="1719" height="951" alt="Screenshot 2026-01-31 015735" src="https://github.com/user-attachments/assets/5fa215bf-213a-48bd-a78b-3d01e1b31a28" />
+
 🛒 E-Commerce Backend API
 
 Node.js • Express • MongoDB • JWT
