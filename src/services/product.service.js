@@ -39,13 +39,17 @@ class ProductService {
     }
 
     static editProduct = async (productData) => {
-        for(const key in productData) {
-            if(productData[key] === undefined) {
-                return
-            }
-        }
-
         const product = await Product.findByIdAndUpdate(productData._id, productData, { new: true }).populate("category");
+        return product;
+    }
+
+    static addProduct = async (productData) => {
+        console.log("SERVICE DATA:", productData);
+
+        const product = new Product(productData)
+        console.log("BEFORE SAVE")
+
+        await product.save();
         return product;
     }
 }

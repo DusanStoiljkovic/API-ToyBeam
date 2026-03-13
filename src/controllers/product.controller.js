@@ -28,3 +28,14 @@ export const editProduct = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
+export const addProduct = async (req, res) => {
+    console.log("BODY: ", req.body);
+    try {
+        const product = await productService.addProduct(req.body);
+        console.log("PRODUCT CREATED:", product);
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
